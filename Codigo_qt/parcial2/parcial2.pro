@@ -4,4 +4,8 @@ CONFIG -= app_bundle
 #CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        pix.cpp
+
+HEADERS += \
+    pix.h
