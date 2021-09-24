@@ -1,0 +1,17 @@
+Manual de uso sobre el programa para representar banderas en una matriz de leds.
+
+El usuario debe hacer uso de 2 programas. Cada programa tiene instrucciones má específicas sobre su uso en sus instrucciones propias.
+
+Para usar el primer programa, debe abrir, en el programa Qt, el archivo con extensión .pro localizado en la dirección:
+Codigo_qt > parcial2 > parcial2.pro 
+Y ejecútelo en Qt una vez abierto. Como se aclaró anteriormente, allí se le dará más detalle sobre cómo proceder.
+
+ 
+Una vez hecho este procedimiento, dirígase al siguiente enlace: https://www.tinkercad.com/things/iUOWDsW1ID2
+
+Al acceder a dicho enlace, por favor dé click izquierdo sobre el botón "Copiar y Modificar", el cual lo va a redirigir a otro enlace donde encontrará, en la parte
+superior izquierda, una serie de botones. Por favor, haga click izquierdo sobre el que dice "Iniciar simulación" y, posterior a ello, haga click izquierdo sobre el que
+dice "Código". Al oprimir este botón, se va a desplegar un recuadro en cuya sección inferior puede encontrar las palabras "Monitor en serie", dé click izquierdo sobre
+ellas, lo cual va a desplegar un recuadro blanco en el cual aparece una serie de instrucciones para usted, por favor léalas cuidadosamente pues allí se le darán las 
+indicaciones sobre cómo usar el segundo programa para obtener exitosamente la representación de la imagen de su bandera escogida en la matriz de neopixeles construida.
+
