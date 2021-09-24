@@ -11,10 +11,9 @@ class pix
 public:
     pix(QImage image_dir);
 private:
-    vector<short int[3][16][16]> pixel;
+    vector<short int[3][8][8]> pixel;
     short int **mat;
-    short int *auxX, *auxY;
+    int *auxX, *auxY;
 };
 
-
-#endif // PIX_H
+#endif // PIX_MAT_H
