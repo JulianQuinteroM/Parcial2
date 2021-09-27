@@ -10,10 +10,12 @@ class pix
 {
 public:
     pix(QImage image_dir);
+    void assignToPix(QImage image_dir);
+    void remuestreo(QImage image_dir, int *auxX, int *auxY);
 private:
-    vector<short int[3][8][8]> pixel;
+    vector<short int> pixel;
     short int **mat;
     int *auxX, *auxY;
 };
 
-#endif // PIX_MAT_H
+#endif // PIX_H

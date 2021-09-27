@@ -18,20 +18,9 @@ int main()
     cout << "  Seccion Vista > Apartado Mostrar u Ocultar > Activar la casilla de Extensiones de nombre de archivo" << endl;
     cout << "  A continuacion, dirigase al lugar donde tiene guardada su imagen y fijese en el nombre de su imagen," << endl;
     cout << "  las letras que se encuentran despues del punto, ese es el formato de su imagen." << endl;
-    cout << "  Ej: Si el nombre de la imagen es imagen_Colombia.png, la imagen esta en formato PNG." << endl;
     string filename;
     getline(cin,filename);
     QImage im(filename.c_str());
     pix matriz_pixeles(im);
-    unsigned int pixelX = 200;
-    unsigned int pixelY = 200;
-    cout << "Intensidad de rojo del pixel seleccionado: " << im.pixelColor(pixelX, pixelY).red() << endl;
-    cout << "Intensidad de verde del pixel seleccionado: " << im.pixelColor(pixelX, pixelY).green() << endl;
-    cout << "Intensidad de azul del pixel seleccionado: " << im.pixelColor(pixelX, pixelY).blue() << endl;
-    /*for(int indx = 0; indx < im.width(); ++indx){
-        for(int indy = 0; indy < im.height(); ++indy){
-            cout << indx << ", " << indy << " = " << im.pixelColor(indx,indy).red() << endl;
-        }
-    }*/
     return 0;
 }
