@@ -194,7 +194,8 @@ release/main.o: ../parcial2/main.cpp D:/Qt/5.15.2/mingw81_64/include/QtGui/QImag
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qvarlengtharray.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qcontainerfwd.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qobject_impl.h \
-		D:/Qt/5.15.2/mingw81_64/include/QtCore/qline.h
+		D:/Qt/5.15.2/mingw81_64/include/QtCore/qline.h \
+		../parcial2/pix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\parcial2\main.cpp
 
 release/pix.o: ../parcial2/pix.cpp ../parcial2/pix.h \

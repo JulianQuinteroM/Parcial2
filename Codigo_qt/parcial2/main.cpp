@@ -22,5 +22,7 @@ int main()
     getline(cin,filename);
     QImage im(filename.c_str());
     pix matriz_pixeles(im);
+    cout << "La imagen dada ha sido procesada exitosamente. Ahora, por favor dirigase al archivo ubicado en la" << endl;
+    cout << " direccion especificada en el archivo instrucciones_de_uso.txt, ubicado en la carpeta Manual_Uso." << endl;
     return 0;
 }
