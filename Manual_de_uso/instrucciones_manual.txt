@@ -2,16 +2,46 @@ Manual de uso sobre el programa para representar banderas en una matriz de leds.
 
 El usuario debe hacer uso de 2 programas. Cada programa tiene instrucciones má específicas sobre su uso en sus instrucciones propias.
 
-Para usar el primer programa, debe abrir, en el programa Qt, el archivo con extensión .pro localizado en la dirección:
-Codigo_qt > parcial2 > parcial2.pro 
-Y ejecútelo en Qt una vez abierto. Como se aclaró anteriormente, allí se le dará más detalle sobre cómo proceder.
+Para usar el primer programa, debe abrir en el programa Qt, en el programa el usuario debe ingresar el nombre del archivo de la imagen que desea ver en la matriz de leds, pero 
+en este paso, qt solo imprimirá el valor RGB de cada led de esta imagen. luego de hacer este procedimiento, el usuario deberá copiar la matriz que imprime qt y esta, 
+pegarla en el código de tinkercad en el lugar que se mostrará a continuación: link de tinkercad (https://www.tinkercad.com/things/dMgNCsP8gUb)
+//
+#include <Adafruit_NeoPixel.h>
+#define LED_COUNT 256
+#define LED_PIN 7
 
- 
-Una vez hecho este procedimiento, dirígase al siguiente enlace: https://www.tinkercad.com/things/iUOWDsW1ID2
+Adafruit_NeoPixel leds(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+// C++ code
+//
+byte Arr[16][16][3]= 
 
-Al acceder a dicho enlace, por favor dé click izquierdo sobre el botón "Copiar y Modificar", el cual lo va a redirigir a otro enlace donde encontrará, en la parte
-superior izquierda, una serie de botones. Por favor, haga click izquierdo sobre el que dice "Iniciar simulación" y, posterior a ello, haga click izquierdo sobre el que
-dice "Código". Al oprimir este botón, se va a desplegar un recuadro en cuya sección inferior puede encontrar las palabras "Monitor en serie", dé click izquierdo sobre
-ellas, lo cual va a desplegar un recuadro blanco en el cual aparece una serie de instrucciones para usted, por favor léalas cuidadosamente pues allí se le darán las 
-indicaciones sobre cómo usar el segundo programa para obtener exitosamente la representación de la imagen de su bandera escogida en la matriz de neopixeles construida.
+{
+  Acá debe ir la matriz
+}; 
+  
+  
+  
+  
+void setup()
+{
+  leds.begin();
+  int cont = 0;
+  for(int fil = 0; fil < 16;fil++){
+    for(int col = 0;col <16;col++){
+      
+        leds.setPixelColor(cont,Arr[fil][col][0],Arr[fil][col][1],Arr[fil][col][2]);
+      
+      cont++;
+    }
+  }
+   
+  leds.show();
+}
+
+void loop(){
+  
+}
+//
+Una vez hecho este procedimiento, el usuario deberá esperar a que la matriz se ilumine por completo, pues no es instantaneo y puede tardar varios segundos en completar
+el procedimiento.
 
