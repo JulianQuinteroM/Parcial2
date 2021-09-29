@@ -1,152 +1,184 @@
 #include "pix.h"
 
-pix::pix(QImage image_dir)
-{
-    auxX = new int;
-    auxY = new int;
-    *auxX = image_dir.width();
-    *auxY = image_dir.height();
-    if(*auxX == 8 && *auxY == 8) assignToPix(image_dir);
-    else if(*auxX < 8 || *auxY < 8){
-        *auxX = image_dir.width();
-        *auxY = image_dir.height();
-        sobremuestreo(image_dir, auxX, auxY);
-    }
-    else if(*auxX > 8 && *auxY > 8){
-        image_dir = subm_gen(image_dir, auxX, auxY);
-        submuestreo(image_dir, auxX, auxY);
-    }
-    string text = create_string();
+pix::pix(){
+
+
 }
 
-void pix::assignToPix(QImage image_dir)
-{
-    for(int y = 0; y < *auxY; y++){
-        for(int x = 0; x < *auxX; x++){
-            pixel.push_back(short(image_dir.pixelColor(x,y).red()));
-            pixel.push_back(short(image_dir.pixelColor(x,y).green()));
-            pixel.push_back(short(image_dir.pixelColor(x,y).blue()));
+void pix::asignar_pix(){
+
+    for(int y = 0; y < height(); y++){
+
+        for(int x = 0; x < width(); x++){
+
+            asignar_color=new intensidades;
+
+            asignar_color->Rojo=pixelColor(x,y).red();
+
+            if (asignar_color->Rojo==255) asignar_color->Rojo=254;
+
+            if (asignar_color->Rojo==0) asignar_color->Rojo=4;
+
+            asignar_color->Verde=pixelColor(x,y).green();
+
+            if (asignar_color->Verde==255) asignar_color->Verde=254;
+
+            if (asignar_color->Verde==0) asignar_color->Verde=4;
+
+            asignar_color->Azul=pixelColor(x,y).blue();
+
+            if (asignar_color->Azul==255) asignar_color->Azul=254;
+
+            if (asignar_color->Azul==0) asignar_color->Azul=4;
+
+            pixel.push_back(*asignar_color);
+
+            delete asignar_color;
         }
+
+        num_pixels.push_back(pixel);
+
+        pixel.clear();
     }
+
+
 }
 
-QImage pix::subm_gen(QImage image_dir, int *auxX, int *auxY)
-{
-    for(int color = 0; color <= 2; color++){
-        *auxX = image_dir.width();
-        *auxY = image_dir.height();
-        while(*auxX >= 32 && *auxY >= 32){
-            for(int indy = 0; indy+1 < *auxY; indy=indy+2){
-                for(int indx = 0; indx+1 < *auxX; indx=indx+2){
-                    QColor tipo_color(image_dir.pixelColor(indx/2,indy/2).red(),image_dir.pixelColor(indx/2,indy/2).green(),image_dir.pixelColor(indx/2,indy/2).blue());
-                    if(color == 0){
-                        tipo_color.setRed((image_dir.pixelColor(indx,indy).red() + image_dir.pixelColor(indx+1,indy).red() + image_dir.pixelColor(indx,indy+1).red() + image_dir.pixelColor(indx+1,indy+1).red())/4);
-                    }
-                    else if(color == 1){
-                        tipo_color.setGreen((image_dir.pixelColor(indx,indy).green() + image_dir.pixelColor(indx+1,indy).blue() + image_dir.pixelColor(indx,indy+1).green() + image_dir.pixelColor(indx+1,indy+1).green())/4);
-                    }
-                    else if(color == 2){
-                        tipo_color.setBlue((image_dir.pixelColor(indx,indy).blue() + image_dir.pixelColor(indx+1,indy).blue() + image_dir.pixelColor(indx,indy+1).blue() + image_dir.pixelColor(indx+1,indy+1).blue())/4);
-                    }
-                    image_dir.setPixelColor(indx/2,indy/2,tipo_color);
+int pix::sub_sob(int px, int py){
+
+    int cantidad_pixeles = px*py ;
+
+    int ancho_iamgen, alto_imagen, dimension_matriz ;
+
+    ancho_iamgen = width() ;
+
+    alto_imagen = height() ;
+
+    dimension_matriz = ancho_iamgen * alto_imagen ;
+
+
+
+
+    if( cantidad_pixeles < dimension_matriz ){
+
+        dX =  ( ancho_iamgen )/( px ) ;
+
+        dY = ( alto_imagen )/( py ) ;
+
+        siz = ( dX )*( dY ) ;
+
+        return 0 ;
+
+    }else if( cantidad_pixeles > dimension_matriz ){
+
+        dX = ( px )/( ancho_iamgen ) ;
+
+        dY = ( py )/( alto_imagen ) ;
+
+        siz = ( dX )*( dY ) ;
+
+        return  1 ;
+    }
+    else{
+
+        return 2 ;
+    }
+
+
+}
+/*
+void pix::Submuestreo(){
+
+    int cont = 0, promedioX = 0 , promedioY = 0, pixcont = 0, limiteX = 0 ;
+
+    long int promedio_Rojo = 0 , promedio_Verde = 0, promedio_Azul = 0 ;
+
+    while( cont < (width() * height() ) ){
+
+        for( int y = 0 ; y < dY ; y++ ){
+
+
+            for( int x = 0 ; x < dX ; x++ ){
+
+
+                promedio_Rojo = num_pixels[promedioY+y][promedioX+x].Rojo + promedio_Rojo ;
+
+                promedio_Verde = num_pixels[promedioY+y][promedioX+x].Verde + promedio_Verde ;
+
+                promedio_Azul = num_pixels[promedioY+y][promedioX+x].Azul + promedio_Azul
+        }
+
+
+        asignar_color = new intensidades ;
+
+        asignar_color->Rojo = promedio_Rojo/siz ;
+
+        asignar_color->Verde = promedio_Verde/siz ;
+
+        asignar_color->Azul = promedio_Azul/siz ;
+
+        if( pixcont == 16 ){
+
+            nueva_redi.push_back( pixel ) ;
+
+            pixel.clear() ;
+
+            pixcont = 0 ;
+        }
+
+
+
+        promedio_Rojo = 0 ;
+
+        promedio_Verde = 0 ;
+
+        promedio_Azul = 0 ;
+
+    }
+
+}
+*/
+
+/*
+void pix::Sobremuestreo(){
+
+    int distX = 0, x1 = 0, y1 = 0 ;
+
+    for(int y = 0 ; y < height() ; y++ ){
+
+
+        for( int x = 0 ; x < width() ; x++ ){
+
+
+            asignar_color = new intensidades;
+
+            asignar_color->Rojo = num_pixels[y][x]
+
+            asignar_color->Verde = num_pixels[y][x]
+            asignar_color->Azul = num_pixels[y][x];
+
+            for( int pY = 0 ; pY < dY ; pY++ ){
+
+                for( int pX = 0 ; pX < dX ; pX++ ){
+
                 }
+
+
+
+
+
             }
-            *auxX = *auxX/2;
-            *auxY = *auxY/2;
+
+
+
+            delete asignar_color ;
+
+
         }
+
+
     }
-    return image_dir;
-}
 
-void pix::submuestreo(QImage image_dir, int *auxX, int *auxY)
-{
-    float distOriginX = 1 /(float(*auxX) - float(2)), dist = 1 /(float(8)), distOriginY = 1/(float(*auxY) - float(2));
-    for(int y = 0; y < 8; y++){
-        int iy = 0;
-        for(;;iy++){
-            if(iy*distOriginY > y*dist+dist/2) break;
-        }
-        int iy_min = iy;
-        for(;iy_min >= 0; iy_min--){
-            if(iy_min*distOriginY <= y*dist+dist/2) break;
-        }
-        for(int x = 0; x < 8; x++){
-            int ix = 0;
-            for(;;ix++){
-                if(ix*distOriginX > x*dist+dist/2) break;
-            }
-            int ix_min = ix;
-            for(;ix_min >= 0;ix_min--){
-                if(ix_min*distOriginX <= x * dist+dist/2) break;
-            }
-            pixel.push_back(short((1/((ix*distOriginX-ix_min*distOriginX)*(iy*distOriginY-iy_min*distOriginY)))*((image_dir.pixelColor(ix_min,iy_min).red()*(ix*distOriginX-(x*dist+dist/2))*(iy*distOriginY-(y*dist+dist/2)))+(image_dir.pixelColor(ix,iy_min).red()*((x*dist+dist/2)-ix_min*distOriginX)*(iy*distOriginY-(y*dist+dist/2)))+(image_dir.pixelColor(ix_min,iy).red()*(ix*distOriginX-(x*dist+dist/2))*((y*dist+dist/2)-iy_min*distOriginY))+(image_dir.pixelColor(ix,iy).red()*((x*dist+dist/2)-ix_min*distOriginX)*((y*dist+dist/2)-iy_min*distOriginY)))));
-            pixel.push_back(short((1/((ix*distOriginX-ix_min*distOriginX)*(iy*distOriginY-iy_min*distOriginY)))*((image_dir.pixelColor(ix_min,iy_min).green()*(ix*distOriginX-(x*dist+dist/2))*(iy*distOriginY-(y*dist+dist/2)))+(image_dir.pixelColor(ix,iy_min).green()*((x*dist+dist/2)-ix_min*distOriginX)*(iy*distOriginY-(y*dist+dist/2)))+(image_dir.pixelColor(ix_min,iy).green()*(ix*distOriginX-(x*dist+dist/2))*((y*dist+dist/2)-iy_min*distOriginY))+(image_dir.pixelColor(ix,iy).green()*((x*dist+dist/2)-ix_min*distOriginX)*((y*dist+dist/2)-iy_min*distOriginY)))));
-            pixel.push_back(short((1/((ix*distOriginX-ix_min*distOriginX)*(iy*distOriginY-iy_min*distOriginY)))*((image_dir.pixelColor(ix_min,iy_min).blue()*(ix*distOriginX-(x*dist+dist/2))*(iy*distOriginY-(y*dist+dist/2)))+(image_dir.pixelColor(ix,iy_min).blue()*((x*dist+dist/2)-ix_min*distOriginX)*(iy*distOriginY-(y*dist+dist/2)))+(image_dir.pixelColor(ix_min,iy).blue()*(ix*distOriginX-(x*dist+dist/2))*((y*dist+dist/2)-iy_min*distOriginY))+(image_dir.pixelColor(ix,iy).blue()*((x*dist+dist/2)-ix_min*distOriginX)*((y*dist+dist/2)-iy_min*distOriginY)))));
-        }
-    }
-}
 
-void pix::sobremuestreo(QImage image_dir, int *auxX, int *auxY)
-{
-    int mult = 16;
-    *auxX = *auxX * mult;
-    *auxY = *auxY * mult;
-    QImage image(*auxX,*auxY,image_dir.format());
-    image.fill(QColor(1,1,1));
-    for(int y = 0; y < *auxY; y++){
-        for(int x = 0; x < *auxX; x++){
-            image.setPixelColor(x,y,QColor(image_dir.pixelColor(x/mult,y/mult).red(),image_dir.pixelColor(x/mult,y/mult).green(),image_dir.pixelColor(x/mult,y/mult).blue()));
-        }
-    }
-    image_dir.~QImage();
-    image = subm_gen(image,auxX,auxY);
-    submuestreo(image,auxX,auxY);
 }
-
-void pix::create_file(string name)
-{
-    fstream text(name, fstream::out);
-    text.close();
-}
-
-string pix::create_string()
-{
-    string texto;
-    int cont = 1;
-    for(auto i = pixel.begin(); i != pixel.end(); i++){
-        if(*i >= 100){
-            for(int mult = 100; mult >= 1; mult/=10){
-                texto.push_back(char(*i/mult+48));
-                *i = *i - (*i/mult)*mult;
-            }
-        }
-        else if(*i >= 10){
-            for(int mult = 10; mult >= 1; mult/= 10){
-                texto.push_back(char(*i/mult+48));
-                *i = *i - (*i/mult)*mult;
-            }
-            texto.push_back('.');
-        }
-        else{
-            texto.push_back(char(*i+48));
-            texto.push_back('.');
-            texto.push_back('.');
-        }
-        if(cont%3!=0){
-            texto.push_back(',');
-        }
-        else{
-            texto.push_back(';');
-        }
-        if(cont%12==0) texto.push_back('\n');
-        cont++;
-    }
-    return texto;
-}
-
-void pix::write_file(string name, string texto)
-{
-    fstream text(name, fstream::out);
-    text <<texto;
-    text.close();
-}
+*/

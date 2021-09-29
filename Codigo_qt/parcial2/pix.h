@@ -1,27 +1,58 @@
 #ifndef PIX_H
 #define PIX_H
 
-#include <vector>
-#include <QImage>
 #include <iostream>
-#include <fstream>
+#include <QImage>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-class pix
+struct intensidades ;
+
+class pix: public QImage
 {
 public:
-    pix(QImage image_dir);
-    void assignToPix(QImage image_dir);
-    QImage subm_gen(QImage image_dir, int *auxX, int *auxY);
-    void submuestreo(QImage image_dir, int *auxX, int *auxY);
-    void sobremuestreo(QImage image_dir, int *auxX, int *auxY);
-    void create_file(string name);
-    string create_string();
-    void write_file(string name, string texto);
+
+    pix();
+
+    void asignar_pix() ;
+
+    int sub_sob( int px, int py );
+
+    void Submuestreo() ;
+
+    void Sobremuestreo() ;
+
+    void w_intensidades();
+
+    void Fill();
+
 private:
-    vector<short int> pixel;
-    int *auxX, *auxY;
+
+   vector < vector < intensidades > > num_pixels ;
+
+   vector < vector < intensidades > > nueva_redi ;
+
+   vector < intensidades > pixel ;
+
+   intensidades *asignar_color ;
+
+   int siz, dX, dY ;
+
+
+
+};
+
+
+struct intensidades{
+
+    unsigned int Rojo ;
+
+    unsigned int Verde ;
+
+    unsigned int Azul ;
+
 };
 
 #endif // PIX_H

@@ -1,28 +1,74 @@
-#include <iostream>
-#include <QImage>
 #include "pix.h"
 
-using namespace std;
 
 int main()
 {
-    cout << "Bienvenido." << endl;
-    cout << "Se le informa que, con el fin de mostrar la imagen elegida de forma correcta en la matriz de neopixeles construida," << endl;
-    cout << "debe hacer uso de este programa y otro localizado en el sitio web de Tinkercad." << endl;
-    cout << "Primero, ingrese la direccion de la imagen de la bandera que desea representar:" << endl;
-    cout << "  - Para conocer dicha direccion, ubiquese en el lugar del explorador de archivos de su ordenador donde se encuentra la imagen," << endl;
-    cout << "  despues, haga clic derecho a la derecha de la ruta de la imagen en la barra de direcciones y escoja la opcion Copiar direccion como texto." << endl;
-    cout << "  Finalmente, pegue la direccion aqui, cambie todos los backslash por slash y agregue el nombre de la imagen incluyendo su respectiva extension." << endl;
-    cout << "  - Recuerde que el formato de la imagen debe ser en formato JPG." << endl;
-    cout << "  Para ver el formato de su imagen, dirigase al explorador de archivos de su ordenador:" << endl;
-    cout << "  Seccion Vista > Apartado Mostrar u Ocultar > Activar la casilla de Extensiones de nombre de archivo" << endl;
-    cout << "  A continuacion, dirigase al lugar donde tiene guardada su imagen y fijese en el nombre de su imagen," << endl;
-    cout << "  las letras que se encuentran despues del punto, ese es el formato de su imagen." << endl;
-    string filename;
-    getline(cin,filename);
-    QImage im(filename.c_str());
-    pix matriz_pixeles(im);
-    cout << "La imagen dada ha sido procesada exitosamente. Ahora, por favor dirigase al archivo ubicado en la" << endl;
-    cout << " direccion especificada en el archivo instrucciones_de_uso.txt, ubicado en la carpeta Manual_Uso." << endl;
+
+    pix imagen ;
+
+    string base_direccion, nombre_imagen ;
+
+    bool flag ;
+
+    base_direccion = "../parcial2/imagenes/" ;       //Definimos la ruta de donde se extraerá la imagen
+
+    cout << "                                               Bienvenido                                " << endl;
+    cout << "  Este programa lee imagenes ingresadas por el usuario, con la particularidad de usar metodos de submuestreo o sobremuestreo" << endl;
+    cout << "  para cambiar el tamaño original de la imagen" << endl << endl;
+    cout << "  Ingrese el nombre de su Imagen con su formato correspondiente." << endl;
+    cout << "  - Recuerde que el formato de la imagen debe ser en formato JPG. Ejm--> (colombia.jpg)"<< endl;
+
+    cout << " Nombre de la imagen: " ;
+
+    cin >> nombre_imagen ;
+
+    cout << endl ;
+
+    base_direccion.append( nombre_imagen ) ;
+
+    flag = imagen.load( base_direccion.c_str() ) ;
+
+    if( flag ){
+
+       cout << " Imagen Cargada" << endl ;
+
+       imagen.asignar_pix() ;
+
+       int n = imagen.sub_sob( 16, 16 ) ;
+
+       switch( n ){
+
+           case 0 :{
+
+            //imagen.Submuestreo();
+
+            //imagen.w_intensidades() ;
+
+           }break;
+
+           case 1:{
+
+            //imagen.Fill() ;
+
+            //imagen.Sobremuestreo() ;
+
+            //imagen.w_intensidades() ;
+
+           }break;
+
+           case 2 :{
+           }break;
+
+       }
+
+
+    }else{
+
+      cout << "ERROR" << endl ;
+
+    }
+
+    cout << endl ;
+
     return 0;
 }

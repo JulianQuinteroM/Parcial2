@@ -122,7 +122,8 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-debug/main.o: ../parcial2/main.cpp D:/Qt/5.15.2/mingw81_64/include/QtGui/QImage \
+debug/main.o: ../parcial2/main.cpp ../parcial2/pix.h \
+		D:/Qt/5.15.2/mingw81_64/include/QtGui/QImage \
 		D:/Qt/5.15.2/mingw81_64/include/QtGui/qimage.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtGui/qtguiglobal.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qglobal.h \
@@ -194,8 +195,7 @@ debug/main.o: ../parcial2/main.cpp D:/Qt/5.15.2/mingw81_64/include/QtGui/QImage 
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qvarlengtharray.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qcontainerfwd.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/qobject_impl.h \
-		D:/Qt/5.15.2/mingw81_64/include/QtCore/qline.h \
-		../parcial2/pix.h
+		D:/Qt/5.15.2/mingw81_64/include/QtCore/qline.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\parcial2\main.cpp
 
 debug/pix.o: ../parcial2/pix.cpp ../parcial2/pix.h \
